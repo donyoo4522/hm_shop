@@ -7,4 +7,5 @@ class GlobalConstans {
 class HttpConstans {
   static const String BANNER_LIST = "/home/banner";
   static const String CATEGORY_LIST = "/home/category/head"; // 首页分类列表
+  static const String PRODUCT_LIST = "/hot/preference"; // 首页商品列表
 }

@@ -25,7 +25,7 @@ class _HmCategoryState extends State<HmCategory> {
             width: 80,
             height: 100,
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 143, 153, 162),
+              color: const Color.fromARGB(255, 198, 199, 200),
               borderRadius: BorderRadius.circular(40),
             ),
             child: Column(

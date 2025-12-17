@@ -39,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
       SliverToBoxAdapter(
         child: Padding(
           padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
-          child: HmSuggention(),
+          child: HmSuggention(promotionResult: _promotionResult),
         ),
       ),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
@@ -61,12 +61,26 @@ class _HomeViewState extends State<HomeView> {
     ];
   }
 
+  // 特惠推荐
+  PromotionResult _promotionResult = PromotionResult(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _getBannerList();
     _getCategoryList();
+    _getPromotionList();
+  }
+
+  // 特惠推荐
+  void _getPromotionList() async {
+    _promotionResult = await getPromotionListApi();
+    setState(() {});
   }
 
   // 获取首页分类列表

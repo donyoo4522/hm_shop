@@ -16,3 +16,10 @@ Future<List<CategoryItem>> getCategoryListApi() async {
     return CategoryItem.formJson(item as Map<String, dynamic>);
   }).toList();
 }
+
+// 特惠推荐商品列表
+Future<PromotionResult> getPromotionListApi() async {
+  return PromotionResult.fromJson(
+    await dioRequest.get(HttpConstans.PRODUCT_LIST),
+  );
+}
