@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hm_shop/api/home.dart';
 import 'package:hm_shop/components/home/hmCategory.dart';
 import 'package:hm_shop/components/home/hmHot.dart';
 import 'package:hm_shop/components/home/hmMoreList.dart';
@@ -14,25 +15,26 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final List<BannerItem> _bannerList = [
-    BannerItem(
-      id: "1",
-      imgUrl: "https://vcg00.cfp.cn/creative/vcg/800/new/VCG41N1094915042.jpg",
-    ),
-    BannerItem(
-      id: "2",
-      imgUrl: "https://vcg00.cfp.cn/creative/vcg/800/new/VCG211414683666.jpg",
-    ),
-    BannerItem(
-      id: "3",
-      imgUrl: "https://vcg00.cfp.cn/creative/vcg/800/new/VCG41N1471931858.jpg",
-    ),
+  List<CategoryItem> _categoryList = [];
+  List<BannerItem> _bannerList = [
+    // BannerItem(
+    //   id: "1",
+    //   imgUrl: "https://vcg00.cfp.cn/creative/vcg/800/new/VCG41N1094915042.jpg",
+    // ),
+    // BannerItem(
+    //   id: "2",
+    //   imgUrl: "https://vcg00.cfp.cn/creative/vcg/800/new/VCG211414683666.jpg",
+    // ),
+    // BannerItem(
+    //   id: "3",
+    //   imgUrl: "https://vcg00.cfp.cn/creative/vcg/800/new/VCG41N1471931858.jpg",
+    // ),
   ];
   List<Widget> _getScrollChildren() {
     return [
       SliverToBoxAdapter(child: HmSlider(bannerList: _bannerList)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      SliverToBoxAdapter(child: HmCategory()),
+      SliverToBoxAdapter(child: HmCategory(categoryList: _categoryList)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       SliverToBoxAdapter(
         child: Padding(
@@ -57,6 +59,25 @@ class _HomeViewState extends State<HomeView> {
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       HmMoreList(),
     ];
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getBannerList();
+    _getCategoryList();
+  }
+
+  // 获取首页分类列表
+  void _getCategoryList() async {
+    _categoryList = await getCategoryListApi();
+    setState(() {});
+  }
+
+  void _getBannerList() async {
+    _bannerList = await getBannerListApi();
+    setState(() {});
   }
 
   @override
