@@ -23,3 +23,28 @@ Future<PromotionResult> getPromotionListApi() async {
     await dioRequest.get(HttpConstans.PRODUCT_LIST),
   );
 }
+
+Future<PromotionResult> getInVogueListApi() async {
+  return PromotionResult.fromJson(
+    await dioRequest.get(HttpConstans.IN_VOGUE_LIST),
+  );
+}
+
+Future<PromotionResult> getOneStopListApi() async {
+  return PromotionResult.fromJson(
+    await dioRequest.get(HttpConstans.ONE_STOP_LIST),
+  );
+}
+
+// 推荐列表
+Future<List<GoodDetailItem>> getRecommendListAPI(
+  Map<String, dynamic> params,
+) async {
+  // 返回请求
+  return ((await dioRequest.get(HttpConstans.RECOMMEND_LIST, params: params))
+          as List)
+      .map((item) {
+        return GoodDetailItem.formJSON(item as Map<String, dynamic>);
+      })
+      .toList();
+}
