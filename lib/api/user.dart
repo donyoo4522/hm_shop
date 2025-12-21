@@ -7,3 +7,7 @@ Future<UserInfo> loginApi(Map<String, dynamic> data) async {
     await dioRequest.post(HttpConstans.LOGIN, data: data),
   );
 }
+
+Future<UserInfo> getUserInfoApi() async {
+  return UserInfo.fromJSON(await dioRequest.get(HttpConstans.USER_PROFILE));
+}

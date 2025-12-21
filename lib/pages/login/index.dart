@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hm_shop/api/user.dart';
 import 'package:hm_shop/stores/controller.dart';
+import 'package:hm_shop/stores/tokenManager.dart';
 import 'package:hm_shop/utils/Toast.dart';
 
 class LoginPage extends StatefulWidget {
@@ -76,7 +77,9 @@ class _LoginPageState extends State<LoginPage> {
         "password": _codeController.text,
       });
       //print(res);
-      _userController.updateUserInfo(res); 
+      _userController.updateUserInfo(res);
+      tokenManager.setToken(res.token);
+
       Toast.showToast(context, "登录成功");
       Navigator.pop(context);
     } catch (e) {
