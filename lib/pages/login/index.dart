@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hm_shop/api/user.dart';
 import 'package:hm_shop/utils/Toast.dart';
 
 class LoginPage extends StatefulWidget {
@@ -64,6 +66,20 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  _login() async {
+    try {
+      final res = await loginApi({
+        "account": _phoneController.text,
+        "password": _codeController.text,
+      });
+      print(res);
+      Toast.showToast(context, "登录成功");
+      Navigator.pop(context);
+    } catch (e) {
+      Toast.showToast(context, (e as DioException).message);
+    }
+  }
+
   // 登录按钮Widget
   Widget _buildLoginButton() {
     return SizedBox(
@@ -77,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
             Toast.showToast(context, "请勾选用户协议");
           } else if (_key.currentState!.validate()) {
             // 这里执行登录逻辑
+            _login();
           }
         },
         style: ElevatedButton.styleFrom(
