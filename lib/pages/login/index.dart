@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hm_shop/api/user.dart';
 import 'package:hm_shop/stores/controller.dart';
 import 'package:hm_shop/stores/tokenManager.dart';
+import 'package:hm_shop/utils/LoadingDialog.dart';
 import 'package:hm_shop/utils/Toast.dart';
 
 class LoginPage extends StatefulWidget {
@@ -72,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
 
   _login() async {
     try {
+      Loadingdialog.show(context, message: "努力登录中...");
       final res = await loginApi({
         "account": _phoneController.text,
         "password": _codeController.text,
@@ -79,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
       //print(res);
       _userController.updateUserInfo(res);
       tokenManager.setToken(res.token);
-
+      Loadingdialog.hide(context);
       Toast.showToast(context, "登录成功");
       Navigator.pop(context);
     } catch (e) {

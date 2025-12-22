@@ -4,7 +4,9 @@ import 'package:hm_shop/api/mine.dart';
 import 'package:hm_shop/components/Mine/hmGuess.dart';
 import 'package:hm_shop/components/home/hmMoreList.dart';
 import 'package:hm_shop/stores/controller.dart';
+import 'package:hm_shop/stores/tokenManager.dart';
 import 'package:hm_shop/viewmodels/home.dart';
+import 'package:hm_shop/viewmodels/user.dart';
 
 class MineView extends StatefulWidget {
   MineView({Key? key}) : super(key: key);
@@ -15,6 +17,45 @@ class MineView extends StatefulWidget {
 
 class _MineViewState extends State<MineView> {
   final UserController _userController = Get.find();
+
+  Widget _getLogout() {
+    return _userController.user.value.id.isNotEmpty
+        ? Expanded(
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("提示"),
+                      content: Text("确认退出登录吗?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("取消"),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            await tokenManager.removeToken();
+                            _userController.updateUserInfo(
+                              UserInfo.fromJSON({}),
+                            );
+                            Navigator.pop(context);
+                          },
+                          child: Text("确认"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Text("退出", textAlign: TextAlign.end),
+            ),
+          )
+        : Text("");
+  }
 
   Widget _buildHeader() {
     return Container(
@@ -63,6 +104,7 @@ class _MineViewState extends State<MineView> {
               ],
             ),
           ),
+          Obx(() => _getLogout()),
         ],
       ),
     );
